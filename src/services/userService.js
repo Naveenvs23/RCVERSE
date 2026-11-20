@@ -1,5 +1,7 @@
 import { apiRequest } from "./api";
 
+// registration checks for a duplicate email before saving the mock account.
+// email is encoded for the url and saved in lowercase for consistent matching.
 export async function registerUser(user) {
   const email = encodeURIComponent(user.email.toLowerCase());
   const matches = await apiRequest(`/users?email=${email}`);
@@ -8,6 +10,8 @@ export async function registerUser(user) {
 }
 
 export async function loginUser({ email, password }) {
+  // this is a course demo: it compares the submitted password with json server
+  // data directly and is not a secure authentication system.
   const matches = await apiRequest(`/users?email=${encodeURIComponent(email.toLowerCase())}`);
   const user = matches.find((item) => item.password === password);
   if (!user) throw new Error("Email or password is incorrect.");

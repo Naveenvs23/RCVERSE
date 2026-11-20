@@ -1,5 +1,7 @@
 import axios from "axios";
 
+// one axios client keeps the api address and json headers consistent for every
+// service. vite reads its optional api url from the local environment file.
 const api = axios.create({
   baseURL: (import.meta.env.VITE_API_URL || "http://localhost:3000").replace(/\/$/, ""),
   headers: { "Content-Type": "application/json" },

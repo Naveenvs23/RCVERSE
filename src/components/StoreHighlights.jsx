@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import { fetchProducts } from "../store/slices/productsSlice";
 
+// this shelf derives popular items from the same redux catalogue as the shop.
 export default function StoreHighlights() {
   const dispatch = useDispatch();
   const { items: products, status } = useSelector((state) => state.products);
+  // copy before sorting so presentation changes do not reorder redux state.
+  // the newest four are excluded, then remaining products are ranked by reviews.
   const newestIds = new Set([...products].sort((a, b) => Number(b.id) - Number(a.id)).slice(0, 4).map((product) => String(product.id)));
   const popular = [...products]
     .filter((product) => !newestIds.has(String(product.id)))

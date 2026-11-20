@@ -25,6 +25,7 @@ export default function Cart() {
   const cartItems = useSelector((state) => state.cart.items);
 
 
+  // reduce visits each item and adds price times quantity to one subtotal.
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -55,6 +56,7 @@ export default function Cart() {
       ) : (
         <div className="cart-layout">
           <section className="cart-items">
+            {/* map creates one row for each product saved in the redux cart. */}
             {cartItems.map((item) => (
               <article className="cart-item" key={item.id}>
                 <ProductImage product={item} />
@@ -76,6 +78,7 @@ export default function Cart() {
                       <Minus size={15} />
                     </button>
 
+                    {/* input changes go through the reducer, which clamps stock. */}
                     <input aria-label={`Quantity for ${item.name}`} type="number" min="1" max={item.stock || 1} value={item.quantity} onChange={(event)=>dispatch(updateQuantity({id:item.id,quantity:event.target.value}))}/>
 
                     <button

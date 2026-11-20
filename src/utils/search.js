@@ -1,3 +1,5 @@
+// normalize spaces, punctuation, and letter case so a user can type a partial
+// phrase without needing to match the product's exact spelling.
 export const normalizeSearchText = (value) => String(value ?? "")
   .normalize("NFKD")
   .toLowerCase()
@@ -6,6 +8,8 @@ export const normalizeSearchText = (value) => String(value ?? "")
   .trim()
   .replace(/\s+/g, " ");
 
+// collect customer-facing product facts rather than searching the whole json
+// object, which could accidentally match property names or image paths.
 function searchableValues(product) {
   const fields = [
     product.name,
@@ -39,6 +43,8 @@ function searchableValues(product) {
   }).join(" ");
 }
 
+// every word may match anywhere in the product fields. the compact comparison
+// also lets a sku such as "mst533904r" match the saved value "mst-533904r".
 export const matchesProductSearch = (product, query) => {
   const normalizedQuery = normalizeSearchText(query);
   if (!normalizedQuery) return true;

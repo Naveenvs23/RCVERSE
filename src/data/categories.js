@@ -1,3 +1,4 @@
+// build local image paths consistently from a photo's filename.
 const image = (name) => `/images/products/${name}`;
 
 // productCategories maps customer-friendly category names to the names in db.json.
@@ -17,13 +18,17 @@ export const categories = [
 ];
 
 export function categoryMatchesProduct(product, category) {
+  // a missing category means no category filter is active.
   if (!category) return true;
+  // prefer exact api category names when the customer category has that mapping.
   if (category.productCategories?.includes(product.category)) return true;
+  // a few customer categories group products using words in their name or tags.
   const searchText = [product.name, product.subcategory, ...(product.tags || [])].join(" ").toLowerCase();
   return category.matchText?.some((term) => searchText.includes(term)) || false;
 }
 
 export function findCategory(value) {
+  // accept a url slug, customer label, or api category label.
   return categories.find((category) => category.slug === value
     || category.name.toLowerCase() === String(value).toLowerCase()
     || category.productCategories?.some((name) => name.toLowerCase() === String(value).toLowerCase()));

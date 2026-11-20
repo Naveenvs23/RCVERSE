@@ -7,6 +7,8 @@ import ProductImage from "../ProductImage";
 import { matchesProductSearch } from "../../utils/search";
 import "./Header.css";
 
+// the header reads counts and product suggestions from redux, while router hooks
+// update the current page and keep search terms in the address bar.
 export default function Header() {
   const cartItems = useSelector((state) => state.cart.items);
   const wishlist = useSelector((state) => state.wishlist.items);
@@ -15,6 +17,8 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const query = new URLSearchParams(location.search).get("q") || "";
+  // routekey tells this temporary input value apart from a value restored from
+  // the current url after navigation.
   const routeKey = `${location.pathname}?${query}`;
   const [searchState, setSearchState] = useState(() => ({ routeKey, value: query }));
   const searchValue = searchState.routeKey === routeKey ? searchState.value : query;
@@ -22,16 +26,20 @@ export default function Header() {
   const [searchFocused, setSearchFocused] = useState(false);
   const [activeSuggestion, setActiveSuggestion] = useState(-1);
   const searchRef = useRef(null);
+  // use the saved theme when present; otherwise follow the operating system.
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem("rcverse-theme");
     return savedTheme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
   });
 
+  // update the document theme and save the choice for the next visit.
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("rcverse-theme", theme);
   }, [theme]);
 
+  // close the suggestion panel when a pointer event happens outside this form.
+  // the cleanup removes the listener when the header unmounts.
   useEffect(() => {
     const closeSearchOnOutsideClick = (event) => {
       if (!searchRef.current?.contains(event.target)) {
@@ -43,6 +51,7 @@ export default function Header() {
     return () => document.removeEventListener("pointerdown", closeSearchOnOutsideClick);
   }, []);
 
+  // only calculate suggestions when the query or redux product list changes.
   const suggestions = useMemo(() => {
     if (searchValue.trim().length < 2) return [];
     return products.filter((product) => matchesProductSearch(product, searchValue)).slice(0, 5);
@@ -54,6 +63,7 @@ export default function Header() {
   }
 
   function searchProducts(value) {
+    // keep the current category path and other query options when submitting.
     const params = new URLSearchParams(location.search);
     const normalizedValue = value.trim().replace(/\s+/g, " ");
     if (normalizedValue) params.set("q", normalizedValue);
@@ -67,6 +77,7 @@ export default function Header() {
   }
 
   function handleSearchKeyDown(event) {
+    // arrow keys move the highlighted suggestion; enter opens it and escape closes.
     if (!suggestions.length) {
       if (event.key === "Escape") setSearchFocused(false);
       return;
@@ -89,6 +100,7 @@ export default function Header() {
     }
   }
 
+  // sum quantities rather than cart rows, because one row can contain many units.
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
@@ -103,6 +115,7 @@ export default function Header() {
           {menuOpen ? <X/> : <Menu/>}
         </button>
 
+        {/* category links are generated from the same data used by the catalogue. */}
         <nav className={`primary-nav ${menuOpen ? "open" : ""}`} aria-label="Main navigation">
           <NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink>
           <NavLink to="/products" onClick={() => setMenuOpen(false)}>Shop</NavLink>
@@ -114,6 +127,7 @@ export default function Header() {
           </details>
         </nav>
 
+        {/* form submission works with enter and the visible search button. */}
         <form ref={searchRef} className="header-search" role="search" onSubmit={(event) => { event.preventDefault(); searchProducts(searchValue); }}>
           <button className="search-submit" type="submit" aria-label="Search products"><Search size={19} aria-hidden="true"/></button>
           <input

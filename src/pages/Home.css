@@ -1,3 +1,4 @@
+/* the hero uses a flexible two-column grid that becomes a single column on small screens. */
 .home { color: var(--light-text, #eceff3); background: var(--background, #0b0d11); }
 .hero-section { width: min(1440px, 100%); min-height: 480px; margin: 0 auto; padding: 58px 5%; display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 44px; }
 .hero-content { max-width: 540px; }
@@ -12,5 +13,6 @@
 .hero-visual { position: relative; min-width: 0; height: 360px; overflow: hidden; border: 1px solid var(--border, #303844); border-radius: 12px; background: linear-gradient(120deg, #10151d, #28384b 65%, #632b36); }
 .hero-visual::after { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg, #10151d44, transparent 55%, #70283222); pointer-events: none; }
 .hero-visual img { width: 100%; height: 100%; object-fit: cover; object-position: center; mix-blend-mode: screen; }
+/* below tablet width, stack text and image while keeping the image height fluid. */
 @media (max-width: 800px) { .hero-section { grid-template-columns: 1fr; gap: 28px; padding-top: 45px; } .hero-visual { height: min(56vw, 340px); min-height: 220px; } }
 @media (max-width: 480px) { .hero-section { padding: 38px 5%; } .hero-buttons { align-items: stretch; flex-direction: column; } .hero-visual { min-height: 200px; } }

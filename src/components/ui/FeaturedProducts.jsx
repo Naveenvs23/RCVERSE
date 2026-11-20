@@ -4,6 +4,7 @@ import ProductCard from "../ProductCard";
 import { fetchProducts } from "../../store/slices/productsSlice";
 import "./FeaturedProducts.css";
 
+// this small reusable shelf accepts a title and a prepared product list.
 function ProductShelf({ title, products, id }) {
   return (
     <section className="home-shelf" id={id}>
@@ -16,6 +17,7 @@ function ProductShelf({ title, products, id }) {
 export default function FeaturedProducts() {
   const dispatch = useDispatch();
   const { items: products, status } = useSelector((state) => state.products);
+  // make sorted copies so these homepage rankings do not mutate redux's list.
   const featured = [...products].sort((a, b) => (b.rating || 0) - (a.rating || 0)).slice(0, 4);
   const newArrivals = [...products].sort((a, b) => Number(b.id) - Number(a.id)).slice(0, 4);
 

@@ -1,15 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getOrder, getOrderByNumber, getOrders, placeOrder, updateOrder } from "../../services/orderService";
 
+// these thunks keep network work outside components and return results to redux.
 export const submitOrder = createAsyncThunk("orders/place", placeOrder);
 export const fetchOrders = createAsyncThunk("orders/fetchForUser", getOrders);
 export const fetchOrderById = createAsyncThunk("orders/fetchOne", getOrder);
 export const fetchOrderByNumber = createAsyncThunk("orders/fetchByNumber", getOrderByNumber);
 export const patchOrder = createAsyncThunk("orders/update", ({ id, changes }) => updateOrder(id, changes));
+// items stores the account's order list, while selected stores the order detail
+// currently open in the history or tracking screen.
 const ordersSlice = createSlice({
   name: "orders",
   initialState: { items: [], selected: null, status: "idle", detailStatus: "idle", error: null },
   reducers: { clearOrderError: (state) => { state.error = null; } },
+  // reducers below keep loading, success, and failure states in one place.
   extraReducers: (builder) => builder
     .addCase(submitOrder.pending, (state) => { state.status = "placing"; state.error = null; })
     .addCase(submitOrder.fulfilled, (state, action) => { state.items.unshift(action.payload); state.selected = action.payload; state.status = "succeeded"; })

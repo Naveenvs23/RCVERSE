@@ -1,3 +1,4 @@
+/* this stylesheet holds shared page patterns, responsive layouts, and order states. */
 /* RCVERSE motorsport visual finish */
 .home{position:relative;background:linear-gradient(180deg,#101218 0%,#0b0c10 100%)}
 .hero-section{position:relative;min-height:650px;padding-top:90px;padding-bottom:82px;background:radial-gradient(ellipse at 76% 45%,#17343a55 0%,transparent 44%),linear-gradient(112deg,#101116 0%,#151820 61%,#0b0c10 100%)}

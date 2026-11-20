@@ -4,6 +4,7 @@ import { categories } from "../../data/categories";
 import { fetchProducts } from "../../store/slices/productsSlice";
 import "./CategorySection.css";
 
+// category tiles use shared category data; selecting one opens its catalogue filter.
 export default function CategorySection() {
   const dispatch = useDispatch();
   const status = useSelector((state) => state.products.status);

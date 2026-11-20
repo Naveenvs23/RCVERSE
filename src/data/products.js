@@ -1,7 +1,11 @@
+// use one helper so product image paths stay rooted under the public folder.
 const image = (name) => `/images/products/${name}`;
+// make is a small product factory. shared defaults keep seed records complete,
+// while the details object overrides only values that differ for one product.
 const make = (id,name,brand,category,subcategory,price,oldPrice,photo,details={}) => {
   const p = {
     id,name,brand,category,subcategory,price,oldPrice,
+    // nullish coalescing keeps real zero values and uses a default only when absent.
     rating: details.rating ?? Number((4.4 + id % 6 / 10).toFixed(1)),
     reviews: details.reviews ?? 18 + id * 7,
     stock: details.stock ?? (id % 11 === 0 ? 0 : 4 + id * 3 % 24),
@@ -19,7 +23,10 @@ const make = (id,name,brand,category,subcategory,price,oldPrice,photo,details={}
     warranty: "Demo listing · seller terms would apply in a live store.",
     tags: details.tags ?? [name,brand,category,subcategory,details.motor,details.motorKV,details.battery,details.scale].filter(Boolean),
   };
+  // derive a sale percentage from current and previous prices when available.
   p.discount = oldPrice ? Math.round((1 - price / oldPrice) * 100) : 0;
+  // entries becomes key/value pairs; filter removes blank specifications; then
+  // the object-from-entries method turns the remaining pairs back into details.
   p.specs = Object.fromEntries(Object.entries({
     "Scale / Fit":p.scale, Brand:p.brand, "Motor / Type":p.motor, "Motor KV":p.motorKV,
     Battery:p.battery, Drive:p.drive, "Top speed":p.speed, Chassis:p.chassis,
@@ -29,6 +36,8 @@ const make = (id,name,brand,category,subcategory,price,oldPrice,photo,details={}
   return p;
 };
 
+// these category records are seed/reference data; the storefront category links
+// are defined in the separate customer-facing category module.
 export const categories = [
   {name:"RC Cars",slug:"rc-cars",description:"Road, rally and race-ready platforms for every kind of driver.",image:image("rally-116.jpg")},
   {name:"Drift Cars",slug:"drift-cars",description:"Rear-drive chassis and precision drift setups.",image:image("drift-mst-red.jpg")},
@@ -42,6 +51,8 @@ export const categories = [
   {name:"Accessories & Upgrades",slug:"accessories-upgrades",description:"Useful upgrades and details for your next build.",image:image("esc-hobbywing.jpg")},
 ];
 
+// this is the canonical seed catalogue used by the database seed script. each call
+// passes core product fields plus optional technical details to the factory.
 export const products = [
  make(1,"RMX 2.5 Brushless Drift Car","MST","Drift Cars","Brushless drift cars",24999,28999,"drift-mst-red.jpg",{tag:"BEST SELLER",motor:"Brushless 3652",motorKV:"2500 KV",battery:"2S LiPo",drive:"RWD",speed:"45 km/h",chassis:"Composite gravity frame",suspension:"Adjustable oil dampers",dimensions:"420 × 195 × 125 mm",weight:"1.55 kg",waterproof:"Splash-resistant electronics",sku:"MST-533904R",gallery:["drift-mst-red.jpg","drift-mst-gallery.jpg","drift-mst-black.jpg"],description:"Ready-to-run rear-wheel-drive drift platform with gyro assistance, adjustable steering geometry and a low-mounted brushless system.",included:"Assembled chassis, 2.4 GHz radio, gyro, brushless motor and ESC."}),
  make(2,"RMX 2.5 E30 Drift Chassis","MST","Drift Cars","Drift chassis kits",19999,22999,"drift-mst-black.jpg",{motor:"Brushless 3652",motorKV:"2500 KV",battery:"2S LiPo",drive:"RWD",speed:"45 km/h",chassis:"Composite RMX platform",suspension:"Oil-filled dampers",dimensions:"420 × 195 mm",weight:"1.48 kg",sku:"MST-533901BK",gallery:["drift-mst-black.jpg","drift-mst-gallery.jpg"]}),
@@ -85,6 +96,7 @@ export const products = [
  make(40,"Body Clip & Pin Assortment","Tamiya","Accessories & Upgrades","Body hardware",299,null,"body-clips.jpg",{material:"Spring steel",dimensions:"Small/medium RC body clips",mount:"Standard 1/10 body posts"}),
 ];
 
+// source pages are recorded for image credit and later licensing review.
 export const productImageSources = [
  ["drift-mst-red.jpg","https://hobbiesdirect.com.au/products/mst-rmx-25-lbmt-rc-drift-car-electric-brushless-rwd-110-scale-rtr-red-533904r-44377"],
  ["drift-mst-black.jpg","https://www.drifted.nl/en/rmx-25-2wd-rtr-brushless-jz3-toyota-soarer-black.html"],

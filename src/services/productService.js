@@ -1,5 +1,7 @@
 import { apiRequest } from "./api";
 
+// json server uses underscore names for page settings. this helper translates
+// the simpler names used by app code and encodes every value for the url.
 const queryString = (params = {}) => {
   const query = new URLSearchParams();
   const normalized={...params};
@@ -10,6 +12,8 @@ const queryString = (params = {}) => {
   return query.size ? `?${query}` : "";
 };
 
+// return an array even if the server response is wrapped in a data property.
+// the redux slice expects an array when it stores the catalogue.
 export const getProducts = async (params = {}) => {
   const response=await apiRequest(`/products${queryString(params)}`);
   const products=Array.isArray(response)?response:response?.data;

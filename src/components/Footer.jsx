@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { categories } from "../data/categories";
 import "./Footer.css";
 
+// the footer uses the central category list so its links stay aligned with the shop.
 export default function Footer() {
   return (
     <footer className="site-footer">
