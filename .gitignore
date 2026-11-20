@@ -1,0 +1,42 @@
+# Dependencies and generated output
+node_modules/
+dist/
+dist-ssr/
+build/
+coverage/
+
+# Local API data is regenerated with `npm run seed`; it may contain personal test data.
+db.json
+
+# Unreferenced legacy images; the active storefront assets are under public/images/products/
+/src/images/
+
+# Environment variables and local-only configuration
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.local
+
+# Logs and temporary files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

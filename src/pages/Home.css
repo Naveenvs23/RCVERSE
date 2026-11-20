@@ -1,0 +1,16 @@
+.home { color: var(--light-text, #eceff3); background: var(--background, #0b0d11); }
+.hero-section { width: min(1440px, 100%); min-height: 480px; margin: 0 auto; padding: 58px 5%; display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 44px; }
+.hero-content { max-width: 540px; }
+.hero-tag { margin-bottom: 16px; color: var(--blue-highlight, #7892ae); font-size: 14px; }
+.hero-content h1 { margin: 0; font-size: clamp(42px, 6vw, 68px); line-height: 1.02; letter-spacing: -.04em; }
+.hero-description { max-width: 410px; margin: 18px 0 25px; color: var(--secondary-text, #a9b1bb); font-size: 17px; line-height: 1.6; }
+.hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-button { min-height: 46px; padding: 0 18px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 14px; font-weight: 600; transition: transform .18s, background .18s; }
+.hero-button:hover { transform: translateY(-2px); }
+.hero-button.primary { color: #fff; background: linear-gradient(115deg, var(--steel-blue, #536c86), var(--dark-red, #702832)); }
+.hero-button.secondary { color: var(--light-text, #eceff3); border: 1px solid var(--border, #303844); background: var(--surface, #161b23); }
+.hero-visual { position: relative; min-width: 0; height: 360px; overflow: hidden; border: 1px solid var(--border, #303844); border-radius: 12px; background: linear-gradient(120deg, #10151d, #28384b 65%, #632b36); }
+.hero-visual::after { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg, #10151d44, transparent 55%, #70283222); pointer-events: none; }
+.hero-visual img { width: 100%; height: 100%; object-fit: cover; object-position: center; mix-blend-mode: screen; }
+@media (max-width: 800px) { .hero-section { grid-template-columns: 1fr; gap: 28px; padding-top: 45px; } .hero-visual { height: min(56vw, 340px); min-height: 220px; } }
+@media (max-width: 480px) { .hero-section { padding: 38px 5%; } .hero-buttons { align-items: stretch; flex-direction: column; } .hero-visual { min-height: 200px; } }
