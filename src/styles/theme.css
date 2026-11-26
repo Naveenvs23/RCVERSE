@@ -1,4 +1,5 @@
-/* shared design tokens let every page use the same colors, spacing, and corners. */
+/*shared design tokens let every page use the same colors, spacing, and corners.*/
+
 :root {
   --background: #0d1014;
   --surface: #13171d;
@@ -27,7 +28,8 @@
   color-scheme: dark;
 }
 
-/* the light theme replaces the same tokens; components do not need separate layouts. */
+/*the light theme replaces the same tokens; components do not need separate layouts.*/
+
 html[data-theme="light"] {
   --background: #f2f4f6;
   --surface: #e7ebef;

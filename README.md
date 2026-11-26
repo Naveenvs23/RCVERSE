@@ -10,7 +10,9 @@ RCVERSE is a React storefront for radio-controlled cars, spare parts, tools and 
 - Product details, image galleries, specifications and related products.
 - Search suggestions for product names, plus search across product details such as brand, category, SKU, description, tags and specifications.
 - Cart and wishlist state stored in the browser's local storage.
-- Mock registration and login against the local JSON Server database.
+- Mock customer and separate administrator login against the local JSON Server database.
+- Admin dashboard with live product, customer, order and sales summaries.
+- Admin product creation, editing, deletion, customer blocking, and order details.
 - Demo checkout, order history, order details and delivery tracking. Orders are stored in JSON Server.
 - Responsive layout with persistent dark and light theme selection.
 
@@ -19,6 +21,7 @@ RCVERSE is a React storefront for radio-controlled cars, spare parts, tools and 
 - React and Vite
 - Redux Toolkit and React Redux
 - React Router
+- React Hook Form for customer, checkout and admin form validation
 - Axios
 - JSON Server
 - Lucide React icons
@@ -31,11 +34,11 @@ rcverse/
 ├── docs/review-preparation/  Course review notes and study guides
 ├── public/images/products/   Local product photos and image source notes
 ├── scripts/                  Development runner and demo database seeder
-├── src/components/           Shared UI and layout components
+├── src/components/           Shared storefront and admin UI components
 ├── src/data/                 Product seed data and category definitions
-├── src/pages/                Account, cart, checkout, orders and home screens
+├── src/pages/                Storefront and administration screens
 ├── src/services/             Axios API and resource service functions
-├── src/store/                Redux store and feature slices
+├── src/store/                Redux store and feature slices, including admin users and orders
 ├── src/styles/               Theme and storefront styles
 ├── src/utils/                Search and notification helpers
 ├── .env.example              Example Vite API URL configuration
@@ -43,7 +46,7 @@ rcverse/
 └── vite.config.js             Vite and React Compiler configuration
 ```
 
-`db.json` is local runtime data and is intentionally not committed. Product seed data lives in `src/data/products.js`; `npm run seed` generates a fresh `db.json` with the product catalogue, one demo user and an empty orders list.
+`db.json` is local runtime data and is intentionally not committed. Product seed data lives in `src/data/products.js`; `npm run seed` generates a fresh `db.json` with the product catalogue, demo customer and demo administrator, and an empty orders list.
 
 ## Requirements
 
@@ -90,6 +93,13 @@ After seeding the database, the demo account is:
 
 - Email: `alex@rcverse.demo`
 - Password: `demo1234`
+
+The administrator demo account is:
+
+- Email: `admin@rcverse.demo`
+- Password: `admin1234`
+
+Open `/admin/login` to sign in as the demo administrator. The admin role is checked against the JSON Server user record when a saved session is restored. JSON Server is still a public demo API: client-side route checks do not replace server-enforced authorization and this setup is not production security.
 
 The mock auth service stores and compares demo passwords in the local JSON Server database as a learning example. It does not hash passwords or provide production security. Use only the seeded demo account or other fake test data; never enter real credentials or personal payment information. Payment selection is simulated, and no money is charged or card/UPI/bank details are processed.
 

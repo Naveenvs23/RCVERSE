@@ -1,0 +1,8 @@
+.admin-login-card > p:last-child {
+  margin: 20px 0 0;
+  font-size: 10px;
+}
+
+.admin-login-card > p:last-child a {
+  color: #f09a9e;
+}

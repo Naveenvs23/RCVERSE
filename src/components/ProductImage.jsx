@@ -12,10 +12,30 @@ const fallbackByCategory = {
   "Accessories & Upgrades": "/images/products/esc-hobbywing.jpg",
 };
 
-export default function ProductImage({ product, className = "", alt, ...props }) {
-  const fallback = fallbackByCategory[product.category] || fallbackByCategory["RC Cars"];
+export default function ProductImage({
+  product,
+  className = "",
+  alt,
+  ...props
+}) {
+  const fallback =
+    fallbackByCategory[product.category] || fallbackByCategory["RC Cars"];
   // onerror swaps to the fallback only once, avoiding an endless error loop if
   // both the original and fallback files are missing.
-  return <img className={className} src={product.image || fallback} alt={alt ?? product.name}
-    loading="lazy" onError={(event) => { if (event.currentTarget.src !== new URL(fallback, window.location.href).href) event.currentTarget.src = fallback; }} {...props}/>;
+  return (
+    <img
+      className={className}
+      src={product.image || fallback}
+      alt={alt ?? product.name}
+      loading="lazy"
+      onError={(event) => {
+        if (
+          event.currentTarget.src !==
+          new URL(fallback, window.location.href).href
+        )
+          event.currentTarget.src = fallback;
+      }}
+      {...props}
+    />
+  );
 }

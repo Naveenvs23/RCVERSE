@@ -1,0 +1,11 @@
+.admin-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-section-title a {
+  color: #f09a9e;
+  font-size: 10px;
+}

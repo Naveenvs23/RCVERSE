@@ -29,7 +29,9 @@ for (const child of processes) {
   });
   child.on("exit", (code) => {
     if (!stopping) {
-      console.error(`A development service stopped (${code ?? "unknown exit"}). Stopping the other service too.`);
+      console.error(
+        `A development service stopped (${code ?? "unknown exit"}). Stopping the other service too.`,
+      );
       stopAll();
       process.exitCode = code || 1;
     }

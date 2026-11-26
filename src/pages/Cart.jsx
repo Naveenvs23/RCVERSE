@@ -1,4 +1,3 @@
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   increaseQuantity,
@@ -8,13 +7,7 @@ import {
   clearCart,
 } from "../store/slices/cartSlice";
 import { Link } from "react-router-dom";
-import {
-  ShoppingBag,
-  Trash2,
-  Plus,
-  Minus,
-  ArrowLeft,
-} from "lucide-react";
+import { ShoppingBag, Trash2, Plus, Minus, ArrowLeft } from "lucide-react";
 import "./Cart.css";
 import ProductImage from "../components/ProductImage";
 import { showToast } from "../utils/toast";
@@ -24,11 +17,10 @@ export default function Cart() {
 
   const cartItems = useSelector((state) => state.cart.items);
 
-
   // reduce visits each item and adds price times quantity to one subtotal.
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
-    0
+    0,
   );
   const shipping = subtotal >= 5000 ? 0 : 199;
   const tax = Math.round(subtotal * 0.05);
@@ -39,7 +31,10 @@ export default function Cart() {
       <div className="cart-heading">
         <span className="section-label">YOUR GARAGE</span>
         <h1>SHOPPING CART</h1>
-        <p>{cartItems.reduce((total, item) => total + item.quantity, 0)} items · {cartItems.length} different products</p>
+        <p>
+          {cartItems.reduce((total, item) => total + item.quantity, 0)} items ·{" "}
+          {cartItems.length} different products
+        </p>
       </div>
 
       {cartItems.length === 0 ? (
@@ -64,28 +59,36 @@ export default function Cart() {
                 <div className="cart-item-details">
                   <h3>{item.name}</h3>
 
-                  <p>
-                    ₹{item.price.toLocaleString("en-IN")}
-                  </p>
+                  <p>₹{item.price.toLocaleString("en-IN")}</p>
 
                   <div className="quantity-controls">
                     <button
                       type="button"
-                      onClick={() =>
-                        dispatch(decreaseQuantity(item.id))
-                      }
+                      onClick={() => dispatch(decreaseQuantity(item.id))}
                     >
                       <Minus size={15} />
                     </button>
 
                     {/* input changes go through the reducer, which clamps stock. */}
-                    <input aria-label={`Quantity for ${item.name}`} type="number" min="1" max={item.stock || 1} value={item.quantity} onChange={(event)=>dispatch(updateQuantity({id:item.id,quantity:event.target.value}))}/>
+                    <input
+                      aria-label={`Quantity for ${item.name}`}
+                      type="number"
+                      min="1"
+                      max={item.stock || 1}
+                      value={item.quantity}
+                      onChange={(event) =>
+                        dispatch(
+                          updateQuantity({
+                            id: item.id,
+                            quantity: event.target.value,
+                          }),
+                        )
+                      }
+                    />
 
                     <button
                       type="button"
-                      onClick={() =>
-                        dispatch(increaseQuantity(item.id))
-                      }
+                      onClick={() => dispatch(increaseQuantity(item.id))}
                     >
                       <Plus size={15} />
                     </button>
@@ -100,9 +103,14 @@ export default function Cart() {
                   <button
                     type="button"
                     className="remove-item"
-                    onClick={() =>
-                      (dispatch(removeFromCart(item.id)), showToast({type:"info",title:"REMOVED FROM CART",product:item}))
-                    }
+                    onClick={() => (
+                      dispatch(removeFromCart(item.id)),
+                      showToast({
+                        type: "info",
+                        title: "REMOVED FROM CART",
+                        product: item,
+                      })
+                    )}
                   >
                     <Trash2 size={18} />
                   </button>
@@ -113,7 +121,14 @@ export default function Cart() {
             <button
               type="button"
               className="clear-cart"
-              onClick={() => { dispatch(clearCart()); showToast({type:"info",title:"CART CLEARED",message:"Your garage cart is empty."}); }}
+              onClick={() => {
+                dispatch(clearCart());
+                showToast({
+                  type: "info",
+                  title: "CART CLEARED",
+                  message: "Your garage cart is empty.",
+                });
+              }}
             >
               CLEAR CART
             </button>
@@ -124,26 +139,31 @@ export default function Cart() {
 
             <div className="summary-row">
               <span>Subtotal</span>
-              <strong>
-                ₹{subtotal.toLocaleString("en-IN")}
-              </strong>
+              <strong>₹{subtotal.toLocaleString("en-IN")}</strong>
             </div>
 
             <div className="summary-row">
               <span>Shipping</span>
-              <strong>{shipping ? `₹${shipping.toLocaleString("en-IN")}` : "COMPLIMENTARY"}</strong>
-            </div>
-
-            <div className="summary-row"><span>Estimated tax (5%)</span><strong>₹{tax.toLocaleString("en-IN")}</strong></div>
-
-            <div className="summary-total">
-              <span>Total</span>
               <strong>
-                ₹{total.toLocaleString("en-IN")}
+                {shipping
+                  ? `₹${shipping.toLocaleString("en-IN")}`
+                  : "COMPLIMENTARY"}
               </strong>
             </div>
 
-            <Link to="/checkout" className="checkout-btn">PROCEED TO CHECKOUT</Link>
+            <div className="summary-row">
+              <span>Estimated tax (5%)</span>
+              <strong>₹{tax.toLocaleString("en-IN")}</strong>
+            </div>
+
+            <div className="summary-total">
+              <span>Total</span>
+              <strong>₹{total.toLocaleString("en-IN")}</strong>
+            </div>
+
+            <Link to="/checkout" className="checkout-btn">
+              PROCEED TO CHECKOUT
+            </Link>
 
             <Link to="/" className="back-shopping">
               <ArrowLeft size={16} />

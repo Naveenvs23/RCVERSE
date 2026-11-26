@@ -1,4 +1,5 @@
-/* set shared browser defaults, readable typography, and a visible keyboard focus. */
+/*set shared browser defaults, readable typography, and a visible keyboard focus.*/
+
 :root {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--light-text, #eceff3);
@@ -9,15 +10,59 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-* { box-sizing: border-box; }
-html { min-width: 320px; scroll-behavior: smooth; }
-body { min-width: 320px; margin: 0; color: var(--light-text, #eceff3); background: var(--background, #0b0d11); }
-button, input, select, textarea { font: inherit; }
-button, a { -webkit-tap-highlight-color: transparent; }
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; }
-img { display: block; max-width: 100%; }
-#root { display: flex; min-height: 100vh; flex-direction: column; }
-main { flex: 1; }
-h1, h2, h3, p { margin-top: 0; }
-:focus-visible { outline: 2px solid var(--blue-highlight, #7892ae); outline-offset: 3px; }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  color: var(--light-text, #eceff3);
+  background: var(--background, #0b0d11);
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+#root {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue-highlight, #7892ae);
+  outline-offset: 3px;
+}

@@ -1,0 +1,26 @@
+.admin-cell-subtext {
+  display: block;
+  margin-top: 4px;
+  color: #9298a2;
+  font-size: 9px;
+}
+
+.admin-tracking {
+  display: grid;
+  gap: 11px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.admin-tracking li {
+  padding-left: 5px;
+  color: #e7e9ec;
+  font-size: 11px;
+}
+
+.admin-tracking li span {
+  display: block;
+  margin-top: 4px;
+  color: #9da3ad;
+  font-size: 9px;
+}

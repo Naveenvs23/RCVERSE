@@ -1,12 +1,13 @@
 // normalize spaces, punctuation, and letter case so a user can type a partial
 // phrase without needing to match the product's exact spelling.
-export const normalizeSearchText = (value) => String(value ?? "")
-  .normalize("NFKD")
-  .toLowerCase()
-  .replace(/[\u0300-\u036f]/g, "")
-  .replace(/[^a-z0-9]+/g, " ")
-  .trim()
-  .replace(/\s+/g, " ");
+export const normalizeSearchText = (value) =>
+  String(value ?? "")
+    .normalize("NFKD")
+    .toLowerCase()
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
 
 // collect customer-facing product facts rather than searching the whole json
 // object, which could accidentally match property names or image paths.
@@ -36,11 +37,14 @@ function searchableValues(product) {
     product.specs,
   ];
 
-  return fields.flatMap((field) => {
-    if (Array.isArray(field)) return field;
-    if (field && typeof field === "object") return Object.entries(field).flat();
-    return field == null ? [] : [field];
-  }).join(" ");
+  return fields
+    .flatMap((field) => {
+      if (Array.isArray(field)) return field;
+      if (field && typeof field === "object")
+        return Object.entries(field).flat();
+      return field == null ? [] : [field];
+    })
+    .join(" ");
 }
 
 // every word may match anywhere in the product fields. the compact comparison
@@ -51,9 +55,14 @@ export const matchesProductSearch = (product, query) => {
 
   const productText = normalizeSearchText(searchableValues(product));
   const queryWords = normalizedQuery.split(" ");
-  const everyWordMatches = queryWords.every((word) => productText.includes(word));
-  const compactQueryMatches = normalizedQuery.replaceAll(" ", "").length > 2
-    && productText.replaceAll(" ", "").includes(normalizedQuery.replaceAll(" ", ""));
+  const everyWordMatches = queryWords.every((word) =>
+    productText.includes(word),
+  );
+  const compactQueryMatches =
+    normalizedQuery.replaceAll(" ", "").length > 2 &&
+    productText
+      .replaceAll(" ", "")
+      .includes(normalizedQuery.replaceAll(" ", ""));
 
   return everyWordMatches || compactQueryMatches;
 };

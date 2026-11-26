@@ -1,5 +1,5 @@
+/*the cart uses a two-column item and summary layout, then stacks on mobile.*/
 
-/* the cart uses a two-column item and summary layout, then stacks on mobile. */
 .cart-page {
   min-height: 80vh;
   padding: 55px 6%;
@@ -76,7 +76,7 @@
 }
 
 .quantity-controls {
-  /* keep quantity buttons and the editable number aligned as one control. */
+  /*keep quantity buttons and the editable number aligned as one control.*/
   display: flex;
   align-items: center;
   gap: 15px;
@@ -142,7 +142,7 @@
 }
 
 .cart-summary {
-  /* the summary stays visible beside the item list on larger screens. */
+  /*the summary stays visible beside the item list on larger screens.*/
   padding: 25px;
   background: #11171c;
   border: 1px solid #263139;
@@ -252,7 +252,8 @@
   font-weight: 800;
 }
 
-/* reduce columns before phone sizes to avoid squeezing the cart rows. */
+/*reduce columns before phone sizes to avoid squeezing the cart rows.*/
+
 @media (max-width: 850px) {
   .cart-layout {
     grid-template-columns: 1fr;

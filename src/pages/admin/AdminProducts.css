@@ -1,0 +1,14 @@
+.admin-action-row button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  color: #cdd1d7;
+  background: #20242b;
+  border: 1px solid #3d424c;
+}
+
+.admin-action-row button:hover {
+  color: #ff9b9f;
+  border-color: #a84249;
+}

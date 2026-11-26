@@ -11,6 +11,8 @@ import "./styles/storefront.css";
 // provider makes the same store available to every child component.
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Provider store={store}><App /></Provider>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </StrictMode>,
 );
